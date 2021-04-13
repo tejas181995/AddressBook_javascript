@@ -9,7 +9,7 @@ var Contact = function (contactDetails) {
     this.contactDetails = contactDetails;
 }
 function createContact() {
-
+    let contactDetails = new Array(fields.length);
     let temp;
     for (var i = 0; i <= fields.length - 1; i++) {
         let input = true;
@@ -33,10 +33,18 @@ function createContact() {
     }
     return contactDetails;
 }
-function printContact(){
-    addressBook.forEach(function(contactDetails){
-        console.log(contactDetails);
-    });
+function printContact() {
+  for (var i = 0; i<= addressBook.length - 1; i++){
+      console.log(addressBook[i]);
+  }
+}
+function deleteEntry() {
+    let deleteContactName = String(usrInput.question("enter contact to be edit: "));
+    for (var i = 0; i <= addressBook.length - 1; i++) {
+        if (addressBook[i].contactDetails[0] == deleteContactName) {
+            addressBook.splice(i, 1);
+        }
+    }
 }
 function addContactTOAddressBook() {
     let noOFContact = usrInput.question("No of contact to be added:  ");
@@ -70,8 +78,8 @@ function editEntry() {
 
 function addressBookSystem() {
     let choice;
-    while (choice != 4) {
-        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n:-`));
+    while (choice != 5) {
+        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. Exit:-`));
         switch (choice) {
             case 1:
                 addContactTOAddressBook();
@@ -83,6 +91,9 @@ function addressBookSystem() {
                 editEntry();
                 break;
             case 4:
+                deleteEntry();
+                break;
+            case 5:
                 console.log("thank you...!!!");
                 break;
             default:
