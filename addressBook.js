@@ -34,9 +34,12 @@ function createContact() {
     return contactDetails;
 }
 function printContact() {
-  for (var i = 0; i<= addressBook.length - 1; i++){
-      console.log(addressBook[i]);
-  }
+    let counter = 0;
+    for (var i = 0; i <= addressBook.length - 1; i++) {
+        counter++;
+        console.log(addressBook[i]);
+    }
+    return counter;
 }
 function deleteEntry() {
     let deleteContactName = String(usrInput.question("enter contact to be edit: "));
@@ -75,11 +78,18 @@ function editEntry() {
         }
     }
 }
+function getNoOfContacts() {
+    const count = addressBook.reduce((counter, obj) => {
+        counter += 1
+        return counter;
+    }, 0);
+    console.log(`total contacts: ${count}`);
+}
 
 function addressBookSystem() {
     let choice;
-    while (choice != 5) {
-        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. Exit:-`));
+    while (choice != 6) {
+        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. get total count \n 6. Exist:-`));
         switch (choice) {
             case 1:
                 addContactTOAddressBook();
@@ -94,6 +104,9 @@ function addressBookSystem() {
                 deleteEntry();
                 break;
             case 5:
+                getNoOfContacts();
+                break
+            case 6:
                 console.log("thank you...!!!");
                 break;
             default:
