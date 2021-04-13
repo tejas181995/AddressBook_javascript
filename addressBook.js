@@ -2,16 +2,14 @@ const usrInput = require("readline-sync");
 const fields = ["firstName", "lastName", "address", "city", "state", "zipCode", "phoneNumber", "email"];
 const regexPattern = ["^[A-Z]{1}[a-z]{2,14}$", "^[A-Z]{1}[a-z]{2,14}$", "^[A-Z]{1}[a-z]{3,14}$", "^[A-Z]{1}[a-z]{3,14}$", "^[A-Z]{1}[a-z]{2,14}$", "^[0-9]{6,}", "^[0-9]{2}[ ][6-9]{1}[0-9]{9}$", "^[A-Za-z0-9+-]+(\\.[A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]{2,}){1,2}$"]
 
-let contactDetails = new Array()
+let contactDetails = new Array(fields.length);
 let addressBook = new Array();
 
 var Contact = function (contactDetails) {
     this.contactDetails = contactDetails;
-    this.printContact = function () {
-        console.log(contact);
-    }
 }
 function createContact() {
+
     let temp;
     for (var i = 0; i <= fields.length - 1; i++) {
         let input = true;
@@ -35,28 +33,66 @@ function createContact() {
     }
     return contactDetails;
 }
+function printContact(){
+    addressBook.forEach(function(contactDetails){
+        console.log(contactDetails);
+    });
+}
 function addContactTOAddressBook() {
     let noOFContact = usrInput.question("No of contact to be added:  ");
     for (var i = 0; i <= noOFContact - 1; i++) {
-        console.log(i)
-        addressBook.push(createContact(new Contact(contactDetails)));
+        addressBook.push((new Contact(createContact())));
     }
 }
+function changeEntery(index) {
+
+    let choice = usrInput.question(`enter option to edit 1. firstName, 2. lastName, 3. address, 4. city, 5. state, 6. zipCode, 7. phoneNumber, 8. email, 9. another change `);
+    let newValue;
+    if (choice <= 8 && choice >= 1) {
+        newValue = usrInput.question("Enter new detail:  ");
+        addressBook[index].contactDetails[choice - 1] = newValue;
+    }
+    else if (choice == 9) {
+        changeEntery(index);
+    }
+
+
+}
+function editEntry() {
+    let editContactName = String(usrInput.question("enter contact to be edit: "));
+    for (var i = 0; i <= addressBook.length - 1; i++) {
+        if (addressBook[i].contactDetails[0] == editContactName) {
+            console.log(i);
+            changeEntery(i);
+        }
+    }
+}
+
 function addressBookSystem() {
-    choice = parseInt(usrInput.question(`Enter 1.to add contact in address book 
-     2. print contact in address book \n:-`));
-    switch (choice) {
-        case 1:
-            addContactTOAddressBook();
-            break;
-        case 2:
-            console.log(`contacts in Address book: ${addressBook}`);
-            break;
-        default:
-            console.log("Wrong Choice...!!");
-            addressBookSystem();
+    let choice;
+    while (choice != 4) {
+        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n:-`));
+        switch (choice) {
+            case 1:
+                addContactTOAddressBook();
+                break;
+            case 2:
+                printContact();
+                break;
+            case 3:
+                editEntry();
+                break;
+            case 4:
+                console.log("thank you...!!!");
+                break;
+            default:
+                console.log("Wrong Choice...!!");
+                addressBookSystem();
+        }
     }
+
 }
+
 
 addressBookSystem();
 
