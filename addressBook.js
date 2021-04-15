@@ -122,10 +122,32 @@ function getNoOfContacts() {
     console.log(`total contacts: ${count}`);
 }
 
+function sortByParameter(index) {
+    addressBook.sort((a, b) => a.contactDetails[index].localeCompare(b.contactDetails[index]));
+}
+
+function sort() {
+    let choice = parseInt(usrInput.question("1.sort by name\n2. sort by city \n 3 sort by state."));
+    switch (choice) {
+        case 1:
+            sortByParameter(0);
+            break;
+        case 2:
+            sortByParameter(3);
+            break;
+        case 3:
+            sortByParameter(4);
+            break;
+        default:
+            console.log('enter valid choice');
+            sort();
+    }
+}
+
 function addressBookSystem() {
     let choice;
-    while (choice != 10) {
-        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. get total count \n 6. view person from same city \n 7. view person from same state \n 8. count person from same city \n 9. count person from same state \n 10. Exit:-`));
+    while (choice != 11) {
+        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. get total count \n 6. view person from same city \n 7. view person from same state \n 8. count person from same city \n 9. count person from same state \n 10.sort by parameter \n. 11. Exit:-`));
         switch (choice) {
             case 1:
                 addContactTOAddressBook();
@@ -154,8 +176,12 @@ function addressBookSystem() {
                 break;
             case 9:
                 let count_1 = getPersonFromCityAndState(4);
-                console.log("count person from same state:  " + count_1)
+                console.log("count person from same state:  " + count_1);
+                break;
             case 10:
+                sort();
+                break;
+            case 11:
                 console.log('thank you');
                 break;
             default:
