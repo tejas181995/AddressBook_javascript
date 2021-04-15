@@ -55,6 +55,16 @@ function createContact() {
 
 }
 
+function getPersonFromCityAndState(index) {
+    let value = usrInput.question(`Enter ${fields[index]} :   `);
+    for (var i = 0; i <= addressBook.length - 1; i++) {
+        if (addressBook[i].contactDetails[index] == value) {
+            console.log(`persons in same ${fields[index]} ${addressBook[i].contactDetails[0]}`);
+        }
+    }
+
+}
+
 function printContact() {
     let counter = 0;
     for (var i = 0; i <= addressBook.length - 1; i++) {
@@ -112,8 +122,8 @@ function getNoOfContacts() {
 
 function addressBookSystem() {
     let choice;
-    while (choice != 6) {
-        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. get total count \n 6. Exist:-`));
+    while (choice != 8) {
+        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. get total count \n 6. view person from same city \n 7. view person from same state \n 8. Exit:-`));
         switch (choice) {
             case 1:
                 addContactTOAddressBook();
@@ -129,9 +139,15 @@ function addressBookSystem() {
                 break;
             case 5:
                 getNoOfContacts();
-                break
+                break;
             case 6:
-                console.log("thank you...!!!");
+                getPersonFromCityAndState(3);
+                break;
+            case 7:
+                getPersonFromCityAndState(4);
+                break;
+            case 8:
+                console.log('thank you');
                 break;
             default:
                 console.log("Wrong Choice...!!");
