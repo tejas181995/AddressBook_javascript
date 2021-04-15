@@ -5,34 +5,56 @@ const regexPattern = ["^[A-Z]{1}[a-z]{2,14}$", "^[A-Z]{1}[a-z]{2,14}$", "^[A-Z]{
 let contactDetails = new Array(fields.length);
 let addressBook = new Array();
 
-var Contact = function (contactDetails) {
+var Contact = function(contactDetails) {
     this.contactDetails = contactDetails;
 }
+
 function createContact() {
+    let addressBook = new Array();
     let contactDetails = new Array(fields.length);
-    let temp;
+    let temp = " ";
+    let tempArr = new Array();
     for (var i = 0; i <= fields.length - 1; i++) {
         let input = true;
         while (input) {
             temp = usrInput.question(`Enter ${fields[i]}: `);
             if (temp.match(regexPattern[i])) {
-                contactDetails[i] = temp;
+                tempArr[i] = temp;
                 input = false;
-            }
-            else {
+            } else {
                 try {
                     throw new Error('Invalid Input Enter a valid input');
-                }
-                catch (error) {
+                } catch (error) {
                     console.log(error);
                     continue;
                 }
             }
 
         }
+
     }
-    return contactDetails;
+
+    if (addressBook.length === 0) {
+        contactDetails = tempArr;
+        console.log(contactDetails);
+        return contactDetails;
+    } else {
+        for (i = 0; i <= addressBook.length - 1; i++) {
+            if ((addressBook[i].contactDetails[0]).includes(tempArr[0])) {
+                console.log(`contact already exist`);
+                createContact();
+            } else {
+                contactDetails = tempArr;
+                return contactDetails;
+            }
+        }
+
+
+    }
+
+
 }
+
 function printContact() {
     let counter = 0;
     for (var i = 0; i <= addressBook.length - 1; i++) {
@@ -41,6 +63,7 @@ function printContact() {
     }
     return counter;
 }
+
 function deleteEntry() {
     let deleteContactName = String(usrInput.question("enter contact to be edit: "));
     for (var i = 0; i <= addressBook.length - 1; i++) {
@@ -49,12 +72,14 @@ function deleteEntry() {
         }
     }
 }
+
 function addContactTOAddressBook() {
     let noOFContact = usrInput.question("No of contact to be added:  ");
     for (var i = 0; i <= noOFContact - 1; i++) {
         addressBook.push((new Contact(createContact())));
     }
 }
+
 function changeEntery(index) {
 
     let choice = usrInput.question(`enter option to edit 1. firstName, 2. lastName, 3. address, 4. city, 5. state, 6. zipCode, 7. phoneNumber, 8. email, 9. another change `);
@@ -62,13 +87,11 @@ function changeEntery(index) {
     if (choice <= 8 && choice >= 1) {
         newValue = usrInput.question("Enter new detail:  ");
         addressBook[index].contactDetails[choice - 1] = newValue;
-    }
-    else if (choice == 9) {
+    } else if (choice == 9) {
         changeEntery(index);
     }
-
-
 }
+
 function editEntry() {
     let editContactName = String(usrInput.question("enter contact to be edit: "));
     for (var i = 0; i <= addressBook.length - 1; i++) {
@@ -78,6 +101,7 @@ function editEntry() {
         }
     }
 }
+
 function getNoOfContacts() {
     const count = addressBook.reduce((counter, obj) => {
         counter += 1
@@ -116,11 +140,4 @@ function addressBookSystem() {
     }
 
 }
-
-
 addressBookSystem();
-
-
-
-
-
