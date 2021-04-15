@@ -56,13 +56,15 @@ function createContact() {
 }
 
 function getPersonFromCityAndState(index) {
+    let count = 0;
     let value = usrInput.question(`Enter ${fields[index]} :   `);
     for (var i = 0; i <= addressBook.length - 1; i++) {
         if (addressBook[i].contactDetails[index] == value) {
+            count++
             console.log(`persons in same ${fields[index]} ${addressBook[i].contactDetails[0]}`);
         }
     }
-
+    return count;
 }
 
 function printContact() {
@@ -122,8 +124,8 @@ function getNoOfContacts() {
 
 function addressBookSystem() {
     let choice;
-    while (choice != 8) {
-        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. get total count \n 6. view person from same city \n 7. view person from same state \n 8. Exit:-`));
+    while (choice != 10) {
+        choice = parseInt(usrInput.question(`Enter 1.to add contact in address book \n 2. print contact in address book \n 3. edit contact\n 4. delete contact \n 5. get total count \n 6. view person from same city \n 7. view person from same state \n 8. count person from same city \n 9. count person from same state \n 10. Exit:-`));
         switch (choice) {
             case 1:
                 addContactTOAddressBook();
@@ -147,6 +149,13 @@ function addressBookSystem() {
                 getPersonFromCityAndState(4);
                 break;
             case 8:
+                let count = getPersonFromCityAndState(3)
+                console.log("count person from same city:  " + count);
+                break;
+            case 9:
+                let count_1 = getPersonFromCityAndState(4);
+                console.log("count person from same state:  " + count_1)
+            case 10:
                 console.log('thank you');
                 break;
             default:
